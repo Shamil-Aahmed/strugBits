@@ -12,7 +12,7 @@ git clone https://github.com/Shamil-Aahmed/strugBits.git
 ```
 ### Database Used MONGODB
 
-## install dependencies
+## Install dependencies
 ```
 cd strugBits
 npm install

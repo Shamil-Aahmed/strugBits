@@ -7,17 +7,18 @@ Welcome to strugBits, a chat application for seamless communication! This reposi
 ### Clone the Repository
 
 To get started with strugBits, clone the repository using the following command:
-
 ```bash
 git clone https://github.com/Shamil-Aahmed/strugBits.git
+```
 
 ## install dependencies
 cd strugBits
 npm install
 
-## Run the application.
-   ```bash
-   npm start
+# Run the application.
+```bash
+npm start
+```
 
 Open http://localhost:3000/auth/interaction/register in your web browser to Register.
 

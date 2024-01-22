@@ -30,9 +30,9 @@ Open http://localhost:3000/auth/interaction/register in your web browser to Regi
 
 3. Once logged-in, start chatting and enjoy the strugBits experience!
 
-## Fetch all your undeleted msgs
+## Fetch all your undeleted msgs ( using browser )
 ```
-endPoint : http://localhost:3000/v1/chats/get-all-chats
+endPoint : http://localhost:3000/v1/chats/get-all-chats 
 method : GET
 ```
 ## Search in the chats ( using browser )

@@ -16,11 +16,11 @@ git clone https://github.com/Shamil-Aahmed/strugBits.git
 cd strugBits
 npm install
 ```
-# Run the application.
+## Run the application.
 ```bash
 npm start
 ```
-
+## Database 
 Open http://localhost:3000/auth/interaction/register in your web browser to Register.
 
 1. You will be directed to auth/interaction/login.
@@ -29,7 +29,17 @@ Open http://localhost:3000/auth/interaction/register in your web browser to Regi
 
 3. Once loggedin, start chatting and enjoy the strugBits experience!
 
-
-
-
+## Msgs can be deleted !!
+run on any API Platform ( POSTMAN )
+### Delete for me !
+```
+endPoint : localhost:3000/v1/chats/delete-for-me/:chatId ( chatId can be found in MongoDB Compass )
+method : PUT
+```
+### Delete for Everyone !
+```
+endPoint : localhost:3000/v1/chats/delete-for-everyone/65adc4d477726c885b769dcb
+( chatId can be found in MongoDB Compass )
+method : PUT
+```
 

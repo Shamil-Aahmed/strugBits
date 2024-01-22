@@ -24,7 +24,7 @@ npm start
 
 Open http://localhost:3000/auth/interaction/register in your web browser to Register.
 
-1. You will be directed to auth/interaction/login.
+1. After Registration, You will be directed to auth/interaction/login.
 
 2. Enter your credentials to complete the login process.
 

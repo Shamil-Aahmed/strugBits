@@ -17,11 +17,6 @@ function serialize(details) {
   }, {});
 }
 
-/**
- *
- * @param {{ body: import("joi")=, query: import("joi")= }}schema
- * @returns {(function(*, *, *): (*|undefined))|*}
- */
 function validate(schema = {}) {
   const { body, query } = schema;
 

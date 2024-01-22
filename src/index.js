@@ -7,14 +7,14 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const { join } = require("node:path");
-const path = require("path");
 const { User, Chat } = require("./models");
 const {API_PORT} = require('./config');
 const bcrpyt = require('bcrypt')
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer);
+const helmet = require('helmet')
+const rateLimit = require('express-rate-limit');
 
 const sessionMiddleware = session({
   secret: "halooo",
@@ -26,6 +26,19 @@ app.use(sessionMiddleware);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.session());
 app.use(express.static('public'))
+// app.use(helmet.contentSecurityPolicy({ //(CSP) ,a browser mechanism that helps to prevent XSS attacks.
+//   directives: {
+//     defaultSrc: ["'self'"],
+//     scriptSrc: ["'self'"],
+//     // Additional directives as needed
+//   }
+// }));
+
+//task 7
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+});
 
 
 passport.use(
@@ -80,9 +93,6 @@ io.engine.use(
 io.on("connection", (socket) => {
   const req = socket.request;
 
-  // console.log(req.user._id);
-  // console.log(req.session)
-
   socket.on('groupchat', async (message) => {
     let newMessage = new Chat({message,from:req.user._id});
     await newMessage.save();
@@ -91,17 +101,16 @@ io.on("connection", (socket) => {
     io.emit('groupchat', {message: newMessage.message, from:req.user.username, created_at: newMessage.created_at});
   });
 
-
-  // socket.on("whoami", (cb) => {
-  //   cb(req.user.username);
-  // });
+  socket.on("whoami", (cb) => {
+    cb(req.user.username);
+  });
 });
 
 // Export the io instance
 module.exports = io;
 
 const routes = require('./routes');
-app.use(routes)
+app.use(routes, limiter)
 
 httpServer.listen(API_PORT, () => {
   console.log(`application is running at: http://localhost:${API_PORT}`);

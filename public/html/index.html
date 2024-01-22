@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Passport example</title>
+    </head>
+    <body>
+        <p>Authenticated!</p>
+
+        <table>
+            <tbody>
+            <tr>
+                <td>Status</td>
+                <td><span id="status">Disconnected</span></td>
+            </tr>
+            <tr>
+                <td>Socket ID</td>
+                <td><span id="socket-id"></span></td>
+            </tr>
+            <tr>
+                <td>Username</td>
+                <td><span id="username"></span></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Chat Div -->
+        <div>
+            <h2>Chat</h2>
+            <div id="chat-display"></div>
+            <form id="chat-form">
+                <input type="text" id="chat-input" placeholder="Type your message" />
+                <button type="submit">Send</button>
+            </form>
+        </div>
+
+        <form action="/auth/interaction/logout" method="post">
+            <div>
+                <input type="submit" value="Log out" />
+            </div>
+        </form>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+          const socket = io();
+          const socketIdSpan = document.getElementById('socket-id');
+          const usernameSpan = document.getElementById('username');
+          const statusSpan = document.getElementById('status');
+          const chatForm = document.getElementById('chat-form');
+          const chatInput = document.getElementById('chat-input');
+          const chatDisplay = document.getElementById('chat-display');
+
+          socket.on('connect', () => {
+            statusSpan.innerText = 'connected';
+            socketIdSpan.innerText = socket.id;
+
+            socket.emit('whoami', (username) => {
+              usernameSpan.innerText = username;
+            });
+          });
+
+          socket.on('disconnect', () => {
+            statusSpan.innerText = 'disconnected';
+            socketIdSpan.innerText = '-';
+          });
+
+          chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const message = chatInput.value;
+            socket.emit('groupchat', message);
+            chatInput.value = '';
+          });
+
+          socket.on('groupchat', (message) => {
+            // Display the received message in the chat display
+            const messageElement = document.createElement('p');
+            messageElement.innerText = `${message.from}[${message.created_at}]:${message.message}`;
+            chatDisplay.appendChild(messageElement);
+          });
+        </script>
+    </body>
+</html>

@@ -1,28 +1,33 @@
 "use strict";
 
-const { MODEL: NAME, COLLECTION, USER_GENDER, USER_STATUS, TIMESTAMPS} = require("../constants");
-const { Schema, model } = require("mongoose");
+const { MODEL: NAME, COLLECTION, TIMESTAMPS, DELETION_TYPE} = require("../constants");
+const { Schema, model, Types } = require("mongoose");
 
 // ------------------------- Schema -----------------------------
 
 const SCHEMA = new Schema(
   {
-    username: {
-      type: String,
-      unique: true,
-      required: true,
+    from: {
+      type: Types.ObjectId,
+      ref: "User",
+      required: true
     },
-    password: {
+    message: {
       type: String,
       required: true,
     },
     deleted_at: {
       type: Date,
     },
+    deletionType:{
+      type: String,
+      enum: Object.values(DELETION_TYPE)
+    }
   },
   {
-    collection: COLLECTION.USER,
-    timestamps: TIMESTAMPS
+    collection: COLLECTION.CHAT,
+    timestamps: TIMESTAMPS,
+    toJSON: {virtuals: true}
   },
 );
 
@@ -37,12 +42,8 @@ SCHEMA.static({
   getSelectableFields() {
     return [
       "id",
-      "email",
-      "name",
-      "birthdate",
-      "gender",
-      "phone_number",
-      "status",
+      "message",
+      "from",
       "created_at",
       "updated_at",
     ];
@@ -51,7 +52,7 @@ SCHEMA.static({
 
 // ------------------------- Model ------------------------------
 
-const MODEL = model(NAME.USER, SCHEMA);
+const MODEL = model(NAME.CHAT, SCHEMA);
 
 // ------------------------- Exports ----------------------------
 

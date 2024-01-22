@@ -1,9 +1,14 @@
-// Import dependencies or modules as needed
-const registerUser = require('./register');
-const loginUser = require('./login');
+"use strict"
+const registerUserController = require('./register');
+const loginUserController = require('./login');
+const getLoginPageController = require('./renderLogin')
+const logoutController = require('./logout')
+const getRegisterPageController = require('./renderRegister')
 
-// Exports an object with the required properties
 module.exports = {
-  registerUser,
-  loginUser
+  registerUserController,
+  loginUserController,
+  getLoginPageController,
+  logoutController,
+  getRegisterPageController
 };

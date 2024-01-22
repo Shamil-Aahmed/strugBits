@@ -11,6 +11,5 @@ mongoose
   .then(() => console.log("MongoDB connection established"))
   .catch(error => {
     console.error(error);
-
     process.exit(1);
   });

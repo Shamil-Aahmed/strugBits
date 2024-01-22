@@ -12,38 +12,28 @@ const CONTROLLER = [
     body: Joi.object().keys({
       email: Joi.string().email().required(),
       password: Joi.string().required(),
-      password_confirm: Joi.string().required(),
     }).required(),
   }),
   async function registerInteraction(req, res) {
-    console.log(req.body);
-
-    const { email, password, password_confirm } = req.body;
-
+    
+    const { email, password } = req.body;
+    let username = email;
     try {
-      if (password !== password_confirm) {
-        throw new Error("Passwords do not match");
-      }
-
-      const userExists = await User.countDocuments({ email });
+      const userExists = await User.countDocuments({ username });
 
       if (userExists > 0) {
         throw new Error("User Already Exists");
       }
-
       const hashedPassword = bcrypt.hashSync(password, 10);
-
-      const user = await User.create({
-        email,
-        password: hashedPassword,
-      });
-
-      res.status(200).send("User Successfully Created");
+      const user = new User({ username, password: hashedPassword });
+      const registeredUser = await user.save();
+      console.log(registeredUser)
+      res.status(200).redirect('/auth/interaction/login');
     } catch (error) {
       console.error(error.message);
       res.status(403).send(error.message);
     }
-  },
+  }
 ];
 
 module.exports = CONTROLLER;

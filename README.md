@@ -12,9 +12,10 @@ git clone https://github.com/Shamil-Aahmed/strugBits.git
 ```
 
 ## install dependencies
+```
 cd strugBits
 npm install
-
+```
 # Run the application.
 ```bash
 npm start

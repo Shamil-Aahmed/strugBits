@@ -28,7 +28,7 @@ Open http://localhost:3000/auth/interaction/register in your web browser to Regi
 
 2. Enter your credentials to complete the login process.
 
-3. Once loggedin, start chatting and enjoy the strugBits experience!
+3. Once logged-in, start chatting and enjoy the strugBits experience!
 
 ## Fetch all your undeleted msgs
 ```

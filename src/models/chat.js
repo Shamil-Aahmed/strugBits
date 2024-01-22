@@ -15,6 +15,7 @@ const SCHEMA = new Schema(
     message: {
       type: String,
       required: true,
+      searchable: true
     },
     deleted_at: {
       type: Date,
@@ -30,6 +31,7 @@ const SCHEMA = new Schema(
     toJSON: {virtuals: true}
   },
 );
+SCHEMA.index({name: 'text', 'message': 'text'});
 
 // ------------------------- Statics ----------------------------
 

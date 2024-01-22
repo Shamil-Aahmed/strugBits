@@ -15,7 +15,7 @@ const CONTROLLER = [
     }).required(),
   }),
   async function registerInteraction(req, res) {
-    
+
     const { email, password } = req.body;
     let username = email;
     try {
@@ -26,8 +26,8 @@ const CONTROLLER = [
       }
       const hashedPassword = bcrypt.hashSync(password, 10);
       const user = new User({ username, password: hashedPassword });
-      const registeredUser = await user.save();
-      console.log(registeredUser)
+      await user.save();
+
       res.status(200).redirect('/auth/interaction/login');
     } catch (error) {
       console.error(error.message);

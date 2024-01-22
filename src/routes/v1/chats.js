@@ -1,17 +1,22 @@
 "use strict";
-const {handleChatMessageControllerV1 } = require("../.././controllers");
+const {handleDeleteForMeChatMessageController, handleDeleteForEveryoneChatMessageController ,getAllChatsForaUserController, showChatForaUserController} = require("../.././controllers");
 const { Router } = require("express");
 
 const router = Router();
 
-// ------------------------- Params ------------------------------------
-
-// router.param("user", userParam);
-
 // ------------------------- Chat  --------------------------------
 
-// router.route("/delete-for-me/:chatId")
-//   .post(handleChatMessageControllerV1);
+router.route('/get-all-chats') // works when user is in session 
+  .get(getAllChatsForaUserController)
+
+router.route("/delete-for-me/:chatId")
+  .put(handleDeleteForMeChatMessageController);
+
+router.route('/delete-for-everyone/:chatId')
+  .put(handleDeleteForEveryoneChatMessageController)
+
+router.route('/show-chat')
+  .get(showChatForaUserController)
 
 // ------------------------- Exports -----------------------------------
 

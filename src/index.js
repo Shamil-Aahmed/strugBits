@@ -57,12 +57,12 @@ passport.use(
 );
 
 passport.serializeUser((user, cb) => {
-  console.log(`serializeUser ${user.id}`);
+  console.log(`serializeUser ${user._id}`);
   cb(null, user);
 });
 
 passport.deserializeUser((user, cb) => {
-  console.log(`deserializeUser ${user.id}`);
+  console.log(`deserializeUser ${user._id}`);
   cb(null, user);
 });
 

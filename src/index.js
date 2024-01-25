@@ -94,6 +94,9 @@ io.on("connection", (socket) => {
   const req = socket.request;
 
   socket.on('groupchat', async (message) => {
+    if(!message){
+      return;
+    }
     let newMessage = new Chat({message,from:req.user._id});
     await newMessage.save();
 
